@@ -60,7 +60,7 @@ class AmoAPI
      */
     public static function getItems($response)
     {
-        return $response['_embedded']['items'] ?? null;
+        return $response['_embedded'] ?? null;
     }
 
     /**

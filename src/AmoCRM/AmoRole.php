@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс AmoLead. Содержит методы для работы со сделками.
+ * Класс AmoUser. Содержит методы для работы с пользователями.
  *
  * @author    andrey-tech
  * @copyright 2020-2021 andrey-tech
@@ -22,13 +22,13 @@ declare(strict_types = 1);
 
 namespace AmoCRM;
 
-class AmoLead extends AmoObject
+class AmoRole extends AmoObject
 {
     /**
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v4/leads';
+    const URL = '/api/v4/roles';
 
     /**
      * @var bool
@@ -138,7 +138,7 @@ class AmoLead extends AmoObject
      * @return AmoLead
      *
      */
-    public function addContacts($contacts): AmoLead
+    public function addContacts($contacts): AmoRole
     {
         if (! is_array($contacts)) {
             $contacts = [ $contacts ];
@@ -176,7 +176,7 @@ class AmoLead extends AmoObject
      * @param array $catalogElements Массив каталогов с их элементами
      * @return AmoLead
      */
-    public function setCatalogElements(array $catalogElements): AmoLead
+    public function setCatalogElements(array $catalogElements): AmoRole
     {
         $this->catalog_elements = $catalogElements;
         
@@ -188,7 +188,7 @@ class AmoLead extends AmoObject
      * @param int $companyId ID компании
      * @return AmoLead
      */
-    public function addCompany(int $companyId) :AmoLead
+    public function addCompany(int $companyId) :AmoRole
     {
         $this->company = [ 'id' => $companyId ];
 
@@ -204,7 +204,7 @@ class AmoLead extends AmoObject
      * @param array|int $contacts ID контакта или массив ID контактов
      * @return AmoLead
      */
-    public function removeContacts($contacts): AmoLead
+    public function removeContacts($contacts): AmoRole
     {
         if (! is_array($contacts)) {
             $contacts = [ $contacts ];
@@ -242,7 +242,7 @@ class AmoLead extends AmoObject
      * @param int $companyId ID компании
      * @return AmoLead
      */
-    public function removeCompany(int $companyId): AmoLead
+    public function removeCompany(int $companyId): AmoRole
     {
         $this->unlink['company_id'] = $companyId;
 

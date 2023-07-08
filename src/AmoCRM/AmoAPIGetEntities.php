@@ -51,6 +51,32 @@ trait AmoAPIGetEntities
     }
 
     /**
+     * Загружает роли
+     * @return array | null
+     */
+    public static function getRoles(array $params = [], bool $returnResponse = false, $subdomain = null)
+    {
+        $response = self::request(AmoRole::URL, 'GET', $params, $subdomain);
+        if (! $returnResponse) {
+            return self::getItems($response);
+        }
+        return $response;
+    }
+
+    /**
+     * Загружает пользователей
+     * @return array | null
+     */
+    public static function getUsers(array $params = [], bool $returnResponse = false, $subdomain = null)
+    {
+        $response = self::request(AmoUser::URL, 'GET', $params, $subdomain);
+        if (! $returnResponse) {
+            return self::getItems($response);
+        }
+        return $response;
+    }
+
+    /**
      * Загружает контакты
      * @return array | null
      */
@@ -80,9 +106,9 @@ trait AmoAPIGetEntities
      * Загружает события
      * @return array | null
      */
-    public static function getNotes(array $params = [], bool $returnResponse = false, $subdomain = null)
+    public static function getEvents(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
-        $response = self::request(AmoNote::URL, 'GET', $params, $subdomain);
+        $response = self::request(AmoEvent::URL, 'GET', $params, $subdomain);
         if (! $returnResponse) {
             return self::getItems($response);
         }
@@ -144,6 +170,19 @@ trait AmoAPIGetEntities
     public static function getPipelines(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v2/pipelines', 'GET', $params, $subdomain);
+        if (! $returnResponse) {
+            return self::getItems($response);
+        }
+        return $response;
+    }
+
+/**
+     * Загружает воронки продаж
+     * @return array | null
+     */
+    public static function getStatuses(string $pipelineID, array $params = [], bool $returnResponse = false, $subdomain = null)
+    {
+        $response = self::request("/api/v4/leads/pipelines/{$pipelineID}/statuses", 'GET', $params, $subdomain);
         if (! $returnResponse) {
             return self::getItems($response);
         }

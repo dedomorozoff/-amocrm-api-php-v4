@@ -448,7 +448,7 @@ trait AmoAPIRequest
         if (isset($response['_embedded']['errors']) && count($response['_embedded']['errors'])) {
             // Извлекаем массив ошибок и результатов
             $errors = $response['_embedded']['errors'];
-            $items = $response['_embedded']['items'] ?? [];
+            $items = $response['_embedded'] ?? [];
 
             // Поиск полей кодов ошибок по ключу 'code' в массиве ошибок при обновлении сущностей
             $codes = [];

@@ -1,7 +1,6 @@
 <?php
 /**
  * Класс AmoNote. Содержит методы для работы с примечаниями.
- *
  * @author    andrey-tech
  * @copyright 2020 andrey-tech
  * @see https://github.com/andrey-tech/amocrm-api-php
@@ -18,13 +17,13 @@ declare(strict_types = 1);
 
 namespace AmoCRM;
 
-class AmoNote extends AmoObject
+class AmoEvent extends AmoObject
 {
     /**
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v2/notes';
+    const URL = '/api/v4/events';
 
     /**
      * Типы событий
