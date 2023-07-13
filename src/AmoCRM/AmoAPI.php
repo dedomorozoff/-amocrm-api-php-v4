@@ -60,7 +60,20 @@ class AmoAPI
      */
     public static function getItems($response)
     {
-        return $response['_embedded'] ?? null;
+        // aaz_alan ДОПИСАТЬ ВСЕ СУЩНОСТИ
+
+        if (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
+        elseif (isset($response['_embedded']['pipelines'])) return $response['_embedded']['pipelines'];
+        elseif (isset($response['_embedded']['contacts'])) return $response['_embedded']['contacts'];
+        elseif (isset($response['_embedded']['companies'])) return $response['_embedded']['companies'];
+        elseif (isset($response['_embedded']['users'])) return $response['_embedded']['users'];
+        elseif (isset($response['_embedded']['tasks'])) return $response['_embedded']['tasks'];
+        elseif (isset($response['_embedded']['roles'])) return $response['_embedded']['roles'];
+        elseif (isset($response['_embedded']['events'])) return $response['_embedded']['events'];
+        elseif (isset($response['_embedded']['catalogs'])) return $response['_embedded']['catalogs'];
+
+        else return null;
+
     }
 
     /**

@@ -102,7 +102,7 @@ class AmoLead extends AmoObject
     public function getParams(): array
     {
         $params = [];
-        $properties = [ 'is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'sale' ];
+        $properties = [ 'is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'price' ];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;

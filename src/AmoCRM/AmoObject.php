@@ -111,6 +111,11 @@ abstract class AmoObject
     public $request_id;
 
     /**
+     * @var int
+     */
+    public $price;
+
+    /**
      * Текущий поддомен для доступа к API
      * @var string
      */
@@ -149,7 +154,7 @@ abstract class AmoObject
     {
         $params = [];
         $properties = [ 'id', 'name', 'responsible_user_id', 'created_by', 'created_at',
-            'updated_by', 'account_id', 'group_id', 'request_id' ];
+            'updated_by', 'account_id', 'group_id', 'request_id', 'price' ];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;
@@ -337,13 +342,14 @@ abstract class AmoObject
     {
         if (isset($this->id)) {
             $lock = AmoAPI::lockEntity($this);
-            $params = [ 'update' => [ $this->getParams() ] ];
-        } else {
-            $lock = null;
-            $params = [ 'add' => [ $this->getParams() ] ];
-        }
-
-        $response = AmoAPI::request($this::URL, 'POST', $params, $this->subdomain);
+            $params =  [$this->getParams()];
+        } 
+        // else {
+        //     $lock = null;
+        //     $params = [ 'add' => [ $this->getParams() ] ];
+        // }
+        var_dump($params);
+        $response = AmoAPI::request($this::URL, 'PATCH', $params, $this->subdomain);
         AmoAPI::unlockEntity($lock);
 
         $items = AmoAPI::getItems($response);

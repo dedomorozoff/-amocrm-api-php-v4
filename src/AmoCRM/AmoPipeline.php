@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс AmoUser. Содержит методы для работы с пользователями.
+ * Класс AmoPipeline. Содержит методы для работы с воронками.
  *
  * @author    andrey-tech
  * @copyright 2020-2021 andrey-tech
@@ -22,13 +22,13 @@ declare(strict_types = 1);
 
 namespace AmoCRM;
 
-class AmoStasus extends AmoObject
+class AmoPipeline extends AmoObject
 {
     /**
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v4/users';
+    const URL = '/api/v4/leads/pipelines';
 
     /**
      * @var bool
@@ -102,7 +102,7 @@ class AmoStasus extends AmoObject
     public function getParams(): array
     {
         $params = [];
-        $properties = [ 'is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'sale' ];
+        $properties = [ 'is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'price' ];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;
@@ -138,7 +138,7 @@ class AmoStasus extends AmoObject
      * @return AmoLead
      *
      */
-    public function addContacts($contacts): AmoStasus
+    public function addContacts($contacts): AmoPipeline
     {
         if (! is_array($contacts)) {
             $contacts = [ $contacts ];
@@ -176,7 +176,7 @@ class AmoStasus extends AmoObject
      * @param array $catalogElements Массив каталогов с их элементами
      * @return AmoLead
      */
-    public function setCatalogElements(array $catalogElements): AmoStasus
+    public function setCatalogElements(array $catalogElements): AmoPipeline
     {
         $this->catalog_elements = $catalogElements;
         
@@ -188,7 +188,7 @@ class AmoStasus extends AmoObject
      * @param int $companyId ID компании
      * @return AmoLead
      */
-    public function addCompany(int $companyId) :AmoStasus
+    public function addCompany(int $companyId) :AmoPipeline
     {
         $this->company = [ 'id' => $companyId ];
 
@@ -204,7 +204,7 @@ class AmoStasus extends AmoObject
      * @param array|int $contacts ID контакта или массив ID контактов
      * @return AmoLead
      */
-    public function removeContacts($contacts): AmoStasus
+    public function removeContacts($contacts): AmoPipeline
     {
         if (! is_array($contacts)) {
             $contacts = [ $contacts ];
@@ -242,7 +242,7 @@ class AmoStasus extends AmoObject
      * @param int $companyId ID компании
      * @return AmoLead
      */
-    public function removeCompany(int $companyId): AmoStasus
+    public function removeCompany(int $companyId): AmoPipeline
     {
         $this->unlink['company_id'] = $companyId;
 

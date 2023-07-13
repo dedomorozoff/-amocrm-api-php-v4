@@ -25,7 +25,7 @@ class AmoCompany extends AmoObject
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v2/companies';
+    const URL = '/api/v4/companies';
 
     /**
      * @var array

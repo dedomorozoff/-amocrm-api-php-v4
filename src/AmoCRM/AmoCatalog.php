@@ -24,7 +24,7 @@ class AmoCatalog extends AmoObject
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v2/catalogs';
+    const URL = '/api/v4/catalogs';
 
     /**
      * @var string
