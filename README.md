@@ -1,5 +1,7 @@
 # amoCRM API PHP Wrapper (частично переделан для 4 версии api)
 
+### ❗❗❗ Частично измененная версия библиотеки под 4 версию API. Изменены часть классов получения объектов сущностей, добавлен метод PATCH для редактирования уже существующей сущности.
+
 ![amoCRM logo](./assets/amocrm-logo.png)  
 
 [![Latest Stable Version](https://poser.pugx.org/andrey-tech/amocrm-api-php/v)](//packagist.org/packages/andrey-tech/amocrm-api-php)
