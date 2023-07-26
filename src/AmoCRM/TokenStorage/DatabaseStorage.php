@@ -8,7 +8,7 @@ class DatabaseStorage implements TokenStorageInterface
     protected $integrationCode;
     private $DBconnection;
 
-    public function __construct(array $dataBaseConfig, string $integrationCode = 'private') 
+    public function __construct(array $dataBaseConfig, string $integrationCode) 
     {
         $this->integrationCode = $integrationCode;
         $this->DBconnection = new DataBaseConnection($dataBaseConfig);
