@@ -1,10 +1,27 @@
 # amoCRM API PHP Wrapper (частично переделан для 4 версии api)
-
+  
 ### ❗❗❗ Частично измененная версия библиотеки под 4 версию API. 
 - Изменены часть классов получения объектов сущностей, добавлен метод PATCH для редактирования уже существующей сущности.
 - Добавлен класс DatabaseStorage для хранения токенов в базе данных.
 
   Для хранения токенов в базе данных требуется запустить файл migration.php или самостоятельно создать таблицу с названием tokens и с полями token_domain(VARCHAR), token_json(JSON), token_integration_code(VARCHAR). token_integration_code - уникальный идентификационный код интеграции, создан для того чтобы было возможно определять интеграции созданные на одном и то же домене.
+Сохранение и загрузка токенов в базу данных:
+
+```php
+AmoAPI::$tokenStorage = new DatabaseStorage(
+[
+  'host' => 'хост',
+  'port' => 'порт',
+  'db' => 'название базы данных',
+  'user' => 'имя пользователя',
+  'password' => 'пароль'
+],
+$integrationCode);
+
+```
+
+  
+
 ![amoCRM logo](./assets/amocrm-logo.png)  
 
 [![Latest Stable Version](https://poser.pugx.org/andrey-tech/amocrm-api-php/v)](//packagist.org/packages/andrey-tech/amocrm-api-php)
