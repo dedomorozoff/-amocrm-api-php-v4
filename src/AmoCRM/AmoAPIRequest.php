@@ -374,6 +374,28 @@ trait AmoAPIRequest
     
                 break;
 
+                case 'DELETE':
+                    // Кодируем тело запроса
+                    $jsonParams = json_encode($params);
+                    if ($jsonParams === false) {
+                        $errorMessage = json_last_error_msg();
+                        throw new AmoAPIException(
+                            "Ошибка JSON-кодирования тела запроса ({$errorMessage}): " . print_r($params, true)
+                        );
+                    }
+                    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonParams);
+    
+                    // Добавляем заголовки HTTP
+                    self::setHTTPHeaders($curl, $subdomain, true);
+    
+                    // Отладочная информация
+                    $jsonParams = self::unescapeUnicode($jsonParams);
+                    $requestInfo = " (DELETE: {$url} {$jsonParams})";
+                    self::debug('['. self::$requestCounter . "] DELETE: {$url}" . PHP_EOL . $jsonParams);
+        
+                    break;
+
                 case 'PATCH':
                     // Кодируем тело запроса
                     $jsonParams = json_encode($params);

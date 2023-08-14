@@ -44,24 +44,27 @@ class DataBaseConnection {
     public function addTokens(string $domain, string $tokens, string $integrationCode) : bool
     {
         if ($this->getTokens($domain, $integrationCode) === false) {
-            $sql = "INSERT INTO tokens (token_domain, token_json, token_integration_code)
-            VALUES (:token_domain, :token_json, :token_integration_code)";
+            $sql = "INSERT INTO tokens (token_domain, token_json, token_integration_code, updated_at)
+            VALUES (:token_domain, :token_json, :token_integration_code, :updated_at)";
             $query = $this->connection->prepare($sql);
             return $query->execute([
                 'token_domain' => $domain,
                 'token_json' => $tokens,
-                'token_integration_code' => $integrationCode
+                'token_integration_code' => $integrationCode,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         } else {
             $sql = "UPDATE tokens
                     SET token_json = :token_json
                     WHERE token_domain = :token_domain
-                    AND token_integration_code = :token_integration_code";
+                    AND token_integration_code = :token_integration_code
+                    AND updated_at = :updated_at";
             $query = $this->connection->prepare($sql);
             return $query->execute([
                 'token_domain' => $domain,
                 'token_json' => $tokens,
-                'token_integration_code' => $integrationCode
+                'token_integration_code' => $integrationCode,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         }
         
