@@ -134,10 +134,30 @@ trait AmoAPIGetEntities
      */
     public static function getWidgets(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
-        $response = self::request('/api/v2/widgets/list', 'GET', $params, $subdomain);
+        $response = self::request('/api/v4/widgets', 'GET', $params, $subdomain);
         if (! $returnResponse) {
             return self::getItems($response);
         }
+        return $response;
+    }
+
+    /**
+     * Устанавливает Виджет
+     * @return array | null
+     */
+    public static function installWidgets(string $widgetCode)
+    {
+        $response = self::request("/api/v4/widgets/{$widgetCode}", 'POST');
+        return $response;
+    }
+
+    /**
+     * Устанавливает Виджет
+     * @return array | null
+     */
+    public static function deleteWidget(string $widgetCode)
+    {
+        $response = self::request("/api/v4/widgets/{$widgetCode}", 'DELETE');
         return $response;
     }
 
