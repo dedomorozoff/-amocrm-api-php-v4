@@ -29,6 +29,7 @@ class DataBaseConnection {
             $this->connection = new \PDO($dsn, $user, $password);
         } catch(\PDOException $e) {
             printf('Не удалось подключиться к базе данных..');
+            print_r($config);
             print_r($e);
         }
     }
