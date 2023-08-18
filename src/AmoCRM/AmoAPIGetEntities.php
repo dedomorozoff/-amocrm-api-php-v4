@@ -141,6 +141,17 @@ trait AmoAPIGetEntities
         return $response;
     }
 
+   /**
+     * Загружает Виджет по коду
+     * @return array | null
+     */
+    public static function getWidget(string $widgetCode)
+    {
+        $response = self::request("/api/v4/widgets/{$widgetCode}", 'GET');
+        return $response;
+    }
+    
+
     /**
      * Устанавливает Виджет
      * @return array | null
