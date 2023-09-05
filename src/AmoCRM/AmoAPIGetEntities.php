@@ -163,7 +163,7 @@ trait AmoAPIGetEntities
     }
 
     /**
-     * Устанавливает Виджет
+     * Удаляет Виджет
      * @return array | null
      */
     public static function deleteWidget(string $widgetCode)
@@ -171,6 +171,50 @@ trait AmoAPIGetEntities
         $response = self::request("/api/v4/widgets/{$widgetCode}", 'DELETE');
         return $response;
     }
+
+
+    /**
+     * Запрашивает поля
+     * @return array | null
+     */
+    public static function getFields($params = [], string $entityName = '', $subdomain = null)
+    {
+        $response = self::request("/api/v4/{$entityName}/custom_fields", 'GET', $params, $subdomain);
+        return $response;
+    }
+
+    /**
+     * Создает поле
+     * @return array | null
+     */
+    public static function createField(array $params = [], string $entityName = '', $subdomain = null)
+    {
+        $response = self::request("/api/v4/{$entityName}/custom_fields", 'POST', $params, $subdomain);
+        return $response;
+    }
+
+
+    /**
+     * Редактирует поле
+     * @return array | null
+     */
+    public static function updateField(array $params = [], string $entityName = '', $subdomain = null)
+    {
+        $response = self::request("/api/v4/{$entityName}/custom_fields", 'PATCH', $params, $subdomain);
+        return $response;
+    }
+
+
+    /**
+     * Удаляет поле
+     * @return array | null
+     */
+    public static function deleteField(string $entityName = '', string $fieldID = '', $subdomain = null)
+    {
+        $response = self::request("/api/v4/{$entityName}/custom_fields/{$fieldID}", 'DELETE', [], $subdomain);
+        return $response;
+    }
+
 
     /**
      * Загружает неразобранные сделки
