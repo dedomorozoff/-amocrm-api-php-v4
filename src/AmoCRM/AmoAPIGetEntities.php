@@ -244,7 +244,7 @@ trait AmoAPIGetEntities
      */
     public static function getPipelines(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
-        $response = self::request('/api/v2/pipelines', 'GET', $params, $subdomain);
+        $response = self::request('/api/v4/leads/pipelines', 'GET', $params, $subdomain);
         if (! $returnResponse) {
             return self::getItems($response);
         }
