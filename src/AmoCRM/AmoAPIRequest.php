@@ -137,7 +137,7 @@ trait AmoAPIRequest
      * Коды состояния НТТР, соответствующие успешному выполнению запроса
      * @var array
      */
-    public static $successStatusCodes = [ 200, 202, 204 ];
+    public static $successStatusCodes = [ 200, 202, 204, 201 ];
 
     /**
      * Соответствие кодов ошибок и сообщений аmoCRM
