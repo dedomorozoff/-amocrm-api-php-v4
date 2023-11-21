@@ -28,7 +28,7 @@
  *
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace AmoCRM;
 
@@ -150,11 +150,11 @@ abstract class AmoObject
      * Возвращает параметры модели в формате для передачи в API
      * @return array
      */
-    public function getParams() :array
+    public function getParams(): array
     {
         $params = [];
-        $properties = [ 'id', 'name', 'responsible_user_id', 'created_by', 'created_at',
-            'updated_by', 'account_id', 'group_id', 'request_id', 'price' ];
+        $properties = ['id', 'name', 'responsible_user_id', 'created_by', 'created_at',
+            'updated_by', 'account_id', 'group_id', 'request_id', 'price'];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;
@@ -162,9 +162,9 @@ abstract class AmoObject
         }
 
         if (count($this->custom_fields)) {
-            $params['custom_fields'] = $this->custom_fields;
+            $params['custom_fields_values'] = $this->custom_fields;
         }
-        
+
         if (count($this->tags)) {
             $params['tags'] = array_column($this->tags, 'name');
         }
@@ -186,7 +186,7 @@ abstract class AmoObject
      */
     public function fillById($id, array $params = [])
     {
-        $params = array_merge([ 'id' => $id ], $params);
+        $params = array_merge(['id' => $id], $params);
         $response = AmoAPI::request($this::URL, 'GET', $params, $this->subdomain);
         $items = AmoAPI::getItems($response);
 
@@ -207,7 +207,7 @@ abstract class AmoObject
 
     /**
      * Возвращает значение дополнительного поля по его ID
-     * @param  int|string $id ID дополнительного поля
+     * @param int|string $id ID дополнительного поля
      * @param bool $returnFirst Вернуть только первое значение
      * @param string $returnValue Имя параметра, значение которого возвращается
      * @return mixed
@@ -244,10 +244,10 @@ abstract class AmoObject
      */
     public function getCustomFields($ids)
     {
-        if (! is_array($ids)) {
-            $ids = [ $ids ];
+        if (!is_array($ids)) {
+            $ids = [$ids];
         }
-        
+
         return array_intersect_key(
             $this->custom_fields,
             array_intersect(
@@ -274,7 +274,7 @@ abstract class AmoObject
                 $field = [
                     'id' => $key,
                     'values' => [
-                        [ 'value' => $value ]
+                        ['value' => $value]
                     ]
                 ];
             }
@@ -296,10 +296,10 @@ abstract class AmoObject
      * @return AmoObject
      *
      */
-    public function addTags($tags) :AmoObject
+    public function addTags($tags): AmoObject
     {
-        if (! is_array($tags)) {
-            $tags = [ $tags ];
+        if (!is_array($tags)) {
+            $tags = [$tags];
         }
 
         foreach ($tags as $value) {
@@ -307,11 +307,11 @@ abstract class AmoObject
                 'name' => $value
             ];
 
-            if (! in_array($value, array_column($this->tags, 'name'))) {
+            if (!in_array($value, array_column($this->tags, 'name'))) {
                 $this->tags[] = $tag;
             }
         }
-    
+
         return $this;
     }
 
@@ -321,10 +321,10 @@ abstract class AmoObject
      * @return AmoObject
      *
      */
-    public function delTags($tags) :AmoObject
+    public function delTags($tags): AmoObject
     {
-        if (! is_array($tags)) {
-            $tags = [ $tags ];
+        if (!is_array($tags)) {
+            $tags = [$tags];
         }
         $this->tags = array_diff_key($this->tags, array_intersect(array_column($this->tags, 'name'), $tags));
 
@@ -342,14 +342,13 @@ abstract class AmoObject
     {
         if (isset($this->id)) {
             $lock = AmoAPI::lockEntity($this);
-            $params =  [$this->getParams()];
-        } 
-        // else {
-        //     $lock = null;
-        //     $params = [ 'add' => [ $this->getParams() ] ];
-        // }
-        var_dump($params);
-        $response = AmoAPI::request($this::URL, 'PATCH', $params, $this->subdomain);
+            $params = [$this->getParams()];
+        } else {
+            $lock = null;
+            $params = [$this->getParams()];
+        }
+//        var_dump($params);
+        $response = AmoAPI::request($this::URL, 'POST', $params, $this->subdomain);
         AmoAPI::unlockEntity($lock);
 
         $items = AmoAPI::getItems($response);
@@ -361,7 +360,7 @@ abstract class AmoObject
             );
         }
 
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return $items[0]['id'];
         }
 
