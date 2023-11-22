@@ -118,7 +118,7 @@ class AmoLead extends AmoObject
         }
 
         if (count($this->contacts)) {
-            $params['contacts_id'] = $this->contacts['id'];
+            $params['_embedded']['contacts'][] = $this->contacts;
         }
 
         if (count($this->catalog_elements)) {
@@ -140,34 +140,34 @@ class AmoLead extends AmoObject
      */
     public function addContacts($contacts): AmoLead
     {
-        if (!is_array($contacts)) {
-            $contacts = [$contacts];
-        }
+//        if (!is_array($contacts)) {
+//            $contacts = [$contacts];
+//        }
 
-        if (!isset($this->contacts['id'])) {
-            $this->contacts['id'] = [];
-        }
-
-        $this->contacts['id'] = array_values(
-            array_unique(
-                array_merge($this->contacts['id'], $contacts)
-            )
-        );
-
-        if (!$this->contacts['id']) {
-            $this->contacts = [];
-        }
-
-        if (isset($this->unlink['contacts_id'])) {
-            $this->unlink['contacts_id'] = array_values(
-                array_diff($this->unlink['contacts_id'], $contacts)
-            );
-
-            if (!$this->unlink['contacts_id']) {
-                unset($this->unlink['contacts_id']);
-            }
-        }
-
+//        if (!isset($this->contacts['id'])) {
+//            $this->contacts['id'] = [];
+//        }
+//
+//        $this->contacts['id'] = array_values(
+//            array_unique(
+//                array_merge($this->contacts['id'], $contacts)
+//            )
+//        );
+//
+//        if (!$this->contacts['id']) {
+//            $this->contacts = [];
+//        }
+//
+//        if (isset($this->unlink['contacts_id'])) {
+//            $this->unlink['contacts_id'] = array_values(
+//                array_diff($this->unlink['contacts_id'], $contacts)
+//            );
+//
+//            if (!$this->unlink['contacts_id']) {
+//                unset($this->unlink['contacts_id']);
+//            }
+//        }
+        $this->contacts['id'] = $contacts;
         return $this;
     }
 
