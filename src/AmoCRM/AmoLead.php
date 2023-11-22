@@ -18,7 +18,7 @@
  *
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace AmoCRM;
 
@@ -71,9 +71,9 @@ class AmoLead extends AmoObject
     public $sale;
 
     /**
-     * @var array
+     * @var array|string
      */
-    public $pipeline = [];
+    public $pipeline_id;
 
     /**
      * @var array
@@ -102,21 +102,21 @@ class AmoLead extends AmoObject
     public function getParams(): array
     {
         $params = [];
-        $properties = [ 'is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'price' ];
+        $properties = ['is_deleted', 'closed_at', 'closest_task_at', 'status_id', 'price', 'pipeline_id'];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;
             }
         }
 
-        if (count($this->pipeline)) {
-            $params['pipeline_id'] = $this->pipeline['id'];
-        }
+//        if (count($this->pipeline_id)) {
+//            $params['pipeline_id'] = $this->pipeline['id'];
+//        }
 
         if (count($this->company)) {
             $params['company_id'] = $this->company['id'];
         }
-        
+
         if (count($this->contacts)) {
             $params['contacts_id'] = $this->contacts['id'];
         }
@@ -140,11 +140,11 @@ class AmoLead extends AmoObject
      */
     public function addContacts($contacts): AmoLead
     {
-        if (! is_array($contacts)) {
-            $contacts = [ $contacts ];
+        if (!is_array($contacts)) {
+            $contacts = [$contacts];
         }
 
-        if (! isset($this->contacts['id'])) {
+        if (!isset($this->contacts['id'])) {
             $this->contacts['id'] = [];
         }
 
@@ -154,7 +154,7 @@ class AmoLead extends AmoObject
             )
         );
 
-        if (! $this->contacts['id']) {
+        if (!$this->contacts['id']) {
             $this->contacts = [];
         }
 
@@ -163,7 +163,7 @@ class AmoLead extends AmoObject
                 array_diff($this->unlink['contacts_id'], $contacts)
             );
 
-            if (! $this->unlink['contacts_id']) {
+            if (!$this->unlink['contacts_id']) {
                 unset($this->unlink['contacts_id']);
             }
         }
@@ -179,7 +179,7 @@ class AmoLead extends AmoObject
     public function setCatalogElements(array $catalogElements): AmoLead
     {
         $this->catalog_elements = $catalogElements;
-        
+
         return $this;
     }
 
@@ -188,9 +188,9 @@ class AmoLead extends AmoObject
      * @param int $companyId ID компании
      * @return AmoLead
      */
-    public function addCompany(int $companyId) :AmoLead
+    public function addCompany(int $companyId): AmoLead
     {
-        $this->company = [ 'id' => $companyId ];
+        $this->company = ['id' => $companyId];
 
         if (isset($this->unlink['company_id']) && $this->unlink['company_id'] === $companyId) {
             unset($this->unlink['company_id']);
@@ -206,11 +206,11 @@ class AmoLead extends AmoObject
      */
     public function removeContacts($contacts): AmoLead
     {
-        if (! is_array($contacts)) {
-            $contacts = [ $contacts ];
+        if (!is_array($contacts)) {
+            $contacts = [$contacts];
         }
 
-        if (! isset($this->unlink['contacts_id'])) {
+        if (!isset($this->unlink['contacts_id'])) {
             $this->unlink['contacts_id'] = [];
         }
 
@@ -220,7 +220,7 @@ class AmoLead extends AmoObject
             )
         );
 
-        if (! $this->unlink['contacts_id']) {
+        if (!$this->unlink['contacts_id']) {
             unset($this->unlink['contacts_id']);
         }
 
@@ -229,7 +229,7 @@ class AmoLead extends AmoObject
                 array_diff($this->contacts['id'], $contacts)
             );
 
-            if (! $this->contacts['id']) {
+            if (!$this->contacts['id']) {
                 $this->contacts = [];
             }
         }
