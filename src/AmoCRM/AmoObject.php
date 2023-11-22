@@ -93,7 +93,7 @@ abstract class AmoObject
     /**
      * @var array
      */
-    public $custom_fields = [];
+    public $custom_fields_values = [];
 
     /**
      * @var array
@@ -161,8 +161,8 @@ abstract class AmoObject
             }
         }
 
-        if (count($this->custom_fields)) {
-            $params['custom_fields_values'] = $this->custom_fields;
+        if (count($this->custom_fields_values)) {
+            $params['custom_fields_values'] = $this->custom_fields_values;
         }
 
         if (count($this->tags)) {
@@ -214,13 +214,13 @@ abstract class AmoObject
      */
     public function getCustomFieldValueById($id, bool $returnFirst = true, string $returnValue = 'value')
     {
-        $index = array_search($id, array_column($this->custom_fields, 'id'));
+        $index = array_search($id, array_column($this->custom_fields_values, 'field_id'));
         if ($index === false) {
             return null;
         }
 
         $list = [];
-        foreach ($this->custom_fields[$index]['values'] as $item) {
+        foreach ($this->custom_fields_values[$index]['values'] as $item) {
             if (is_array($item)) {
                 if (isset($item[$returnValue])) {
                     $list[] = $item[$returnValue];
@@ -249,9 +249,9 @@ abstract class AmoObject
         }
 
         return array_intersect_key(
-            $this->custom_fields,
+            $this->custom_fields_values,
             array_intersect(
-                array_column($this->custom_fields, 'id'),
+                array_column($this->custom_fields_values, 'id'),
                 $ids
             )
         );
@@ -279,11 +279,11 @@ abstract class AmoObject
                 ];
             }
 
-            $i = array_search($key, array_column($this->custom_fields, 'id'));
+            $i = array_search($key, array_column($this->custom_fields_values, 'id'));
             if ($i !== false) {
-                $this->custom_fields[$i]['values'] = $field['values'];
+                $this->custom_fields_values[$i]['values'] = $field['values'];
             } else {
-                $this->custom_fields[] = $field;
+                $this->custom_fields_values[] = $field;
             }
         }
 
