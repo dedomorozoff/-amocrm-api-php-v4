@@ -153,7 +153,7 @@ abstract class AmoObject
     public function getParams(): array
     {
         $params = [];
-        $properties = ['id', 'name', 'responsible_user_id', 'created_by', 'created_at',
+        $properties = ['field_id', 'name', 'responsible_user_id', 'created_by', 'created_at',
             'updated_by', 'account_id', 'group_id', 'request_id', 'price'];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
@@ -267,12 +267,12 @@ abstract class AmoObject
         foreach ($params as $key => $value) {
             if (is_array($value)) {
                 $field = [
-                    'id' => $key,
+                    'field_id' => $key,
                     'values' => $value
                 ];
             } else {
                 $field = [
-                    'id' => $key,
+                    'field_id' => $key,
                     'values' => [
                         ['value' => $value]
                     ]
