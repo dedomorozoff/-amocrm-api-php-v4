@@ -153,7 +153,7 @@ abstract class AmoObject
     public function getParams(): array
     {
         $params = [];
-        $properties = ['field_id', 'name', 'responsible_user_id', 'created_by', 'created_at',
+        $properties = ['id', 'field_id', 'name', 'responsible_user_id', 'created_by', 'created_at',
             'updated_by', 'account_id', 'group_id', 'request_id', 'price'];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
@@ -343,12 +343,14 @@ abstract class AmoObject
         if (isset($this->id)) {
             $lock = AmoAPI::lockEntity($this);
             $params = [$this->getParams()];
+            $typeHTTPRequest = 'PATCH';
         } else {
             $lock = null;
             $params = [$this->getParams()];
+            $typeHTTPRequest = 'POST';
         }
 //        var_dump($params);
-        $response = AmoAPI::request($this::URL, 'POST', $params, $this->subdomain);
+        $response = AmoAPI::request($this::URL, $typeHTTPRequest, $params, $this->subdomain);
         AmoAPI::unlockEntity($lock);
 
         $items = AmoAPI::getItems($response);
