@@ -1,6 +1,6 @@
 <?php
 /**
- * Класс AmoNote. Содержит методы для работы с примечаниями.
+ * Класс AmoNote. Содержит методы для работы с примечаниями в сделках.
  *
  * @author    andrey-tech
  * @copyright 2020 andrey-tech
@@ -14,19 +14,19 @@
  *
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace AmoCRM;
 
-class AmoNote extends AmoObject
+class AmoNoteLead extends AmoObject
 {
     /**
      * Путь для запроса к API
      * @var string
      */
-    const URL = '/api/v4/notes';
+    const URL = '/api/v4/leads/notes';
 
-      /**
+    /**
      * @var bool
      */
     public $is_editable;
@@ -49,9 +49,9 @@ class AmoNote extends AmoObject
     /**
      * Конструктор
      * @param array $data Параметры модели
-     * @param string $subdomain Поддомен amoCRM
+     * @param string|null $subdomain Поддомен amoCRM
      */
-    public function __construct(array $data = [], $subdomain = null)
+    public function __construct(array $data = [],string $subdomain = null)
     {
         parent::__construct($data, $subdomain);
     }
@@ -60,22 +60,22 @@ class AmoNote extends AmoObject
      * Приводит модель к формату для передачи в API
      * @return array
      */
-    public function getParams() :array
+    public function getParams(): array
     {
         $params = [];
 
-        $properties = [ 'is_editable', 'entity_id', 'text' ];
+        $properties = ['is_editable', 'entity_id', 'text', 'note_type'];
         foreach ($properties as $property) {
             if (isset($this->$property)) {
                 $params[$property] = $this->$property;
             }
         }
 
-        if ($this->note_type == 'common'||
+        if ($this->note_type == 'common' ||
             $this->note_type == 'sms_in' ||
             $this->note_type == 'sms_out'
         ) {
-            $params['params'] = [ 'text' => $this->text ];
+            $params['params'] = ['text' => $this->text];
         }
 
         return array_merge(parent::getParams(), $params);
