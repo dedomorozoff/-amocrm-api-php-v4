@@ -73,6 +73,7 @@ class AmoAPI
         elseif (isset($response['_embedded']['catalogs'])) return $response['_embedded']['catalogs'];
         elseif (isset($response['_embedded']['statuses'])) return $response['_embedded']['statuses'];
         elseif (isset($response['_embedded']['widgets'])) return $response['_embedded']['widgets'];
+        elseif (isset($response['_embedded']['notes'])) return $response['_embedded']['notes'];
 
 
         else return null;
@@ -124,7 +125,7 @@ class AmoAPI
         if (! is_array($amoObjects)) {
             $amoObjects = [ $amoObjects ];
         }
-        
+
         $parameters = [];
         foreach ($amoObjects as $object) {
             if (isset($object->id)) {
@@ -152,7 +153,7 @@ class AmoAPI
             }
             return $items;
         }
-        
+
         return $responses;
     }
 
@@ -169,7 +170,7 @@ class AmoAPI
         if (! is_array($amoObjects)) {
             $amoObjects = [ $amoObjects ];
         }
-        
+
         $parameters = [];
         foreach ($amoObjects as $object) {
             $params = $object->getParams();
@@ -198,7 +199,7 @@ class AmoAPI
             }
             return $items;
         }
-        
+
         return $responses;
     }
 }
