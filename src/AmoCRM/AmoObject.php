@@ -349,7 +349,6 @@ abstract class AmoObject
             $params = [$this->getParams()];
             $typeHTTPRequest = 'POST';
         }
-//        var_dump($params);
         $response = AmoAPI::request($this::URL, $typeHTTPRequest, $params, $this->subdomain);
         AmoAPI::unlockEntity($lock);
 
