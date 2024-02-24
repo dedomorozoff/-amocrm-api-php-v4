@@ -18,7 +18,7 @@
  *
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace AmoCRM;
 
@@ -31,7 +31,7 @@ trait AmoAPIGetEntities
     public static function getCompanies(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoCompany::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -44,7 +44,7 @@ trait AmoAPIGetEntities
     public static function getLeads(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoLead::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -57,7 +57,7 @@ trait AmoAPIGetEntities
     public static function getRoles(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoRole::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -70,7 +70,7 @@ trait AmoAPIGetEntities
     public static function getUsers(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoUser::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -83,7 +83,7 @@ trait AmoAPIGetEntities
     public static function getContacts(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoContact::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -96,7 +96,7 @@ trait AmoAPIGetEntities
     public static function getTasks(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoTask::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -109,7 +109,7 @@ trait AmoAPIGetEntities
     public static function getEvents(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request(AmoEvent::URL, 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -122,7 +122,7 @@ trait AmoAPIGetEntities
     public static function getWebhooks(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v2/webhooks', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -135,13 +135,13 @@ trait AmoAPIGetEntities
     public static function getWidgets(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v4/widgets', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
     }
 
-   /**
+    /**
      * Загружает Виджет по коду
      * @return array | null
      */
@@ -150,7 +150,7 @@ trait AmoAPIGetEntities
         $response = self::request("/api/v4/widgets/{$widgetCode}", 'GET');
         return $response;
     }
-    
+
 
     /**
      * Устанавливает Виджет
@@ -223,7 +223,7 @@ trait AmoAPIGetEntities
     public static function getIncomingLeads(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v2/incoming_leads', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -245,20 +245,20 @@ trait AmoAPIGetEntities
     public static function getPipelines(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v4/leads/pipelines', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
     }
 
-/**
+    /**
      * Загружает воронки продаж
      * @return array | null
      */
     public static function getStatuses(string $pipelineID, array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request("/api/v4/leads/pipelines/{$pipelineID}/statuses", 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -271,7 +271,7 @@ trait AmoAPIGetEntities
     public static function getCatalogs(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v2/catalogs', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
@@ -284,9 +284,17 @@ trait AmoAPIGetEntities
     public static function getCatalogElements(array $params = [], bool $returnResponse = false, $subdomain = null)
     {
         $response = self::request('/api/v2/catalog_elements', 'GET', $params, $subdomain);
-        if (! $returnResponse) {
+        if (!$returnResponse) {
             return self::getItems($response);
         }
         return $response;
+    }
+
+    /**
+     * @throws AmoAPIException
+     */
+    public static function getGroups($params = [], string $entityName = '', $subdomain = null): ?array
+    {
+        return self::request("/api/v4/{$entityName}/custom_fields/groups", 'GET', $params, $subdomain);
     }
 }
