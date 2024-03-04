@@ -101,6 +101,16 @@ abstract class AmoObject
     public $tags = [];
 
     /**
+     * @var array
+     */
+    public $contacts = [];
+
+    /**
+     * @var array
+     */
+    public $_embedded = [];
+
+    /**
      * @var int
      */
     public $group_id;
