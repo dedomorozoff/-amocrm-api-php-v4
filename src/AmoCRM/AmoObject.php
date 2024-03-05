@@ -332,6 +332,36 @@ abstract class AmoObject
 
         return $this;
     }
+    public function setEnums(array $params)
+    {
+        foreach ($params as $key => $value) {
+            $field_id = array_keys($value)[0];
+            if (is_array($value)) {
+                $field = [
+                    'field_id' => $field_id,
+                    'values' => [
+                        ['value' => $value[$field_id]]
+                    ]
+                ];
+            } else {
+                $field = [
+                    'field_id' => $field_id,
+                    'values' => [
+                        ['value' => $value[$field_id]]
+                    ]
+                ];
+            }
+
+            $i = array_search($key, array_column($this->custom_fields_values, 'id'));
+            if ($i !== false) {
+                $this->custom_fields_values[$i]['values'] = $field['values'];
+            } else {
+                $this->custom_fields_values[] = $field;
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Добавляет тэги
