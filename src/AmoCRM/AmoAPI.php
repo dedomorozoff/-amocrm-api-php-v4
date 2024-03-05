@@ -74,6 +74,7 @@ class AmoAPI
         elseif (isset($response['_embedded']['statuses'])) return $response['_embedded']['statuses'];
         elseif (isset($response['_embedded']['widgets'])) return $response['_embedded']['widgets'];
         elseif (isset($response['_embedded']['notes'])) return $response['_embedded']['notes'];
+        elseif (isset($response)) return $response;
 
 
         else return null;

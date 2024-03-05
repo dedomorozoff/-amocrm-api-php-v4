@@ -196,16 +196,18 @@ abstract class AmoObject
      */
     public function fillById($id, array $params = [])
     {
-        $params = array_merge(['id' => $id], $params);
-        $response = AmoAPI::request($this::URL, 'GET', $params, $this->subdomain);
+//        $params = array_merge(['id' => $id], $params);
+        $response = AmoAPI::request($this::URL . '/' . $id, 'GET', $params, $this->subdomain);
         $items = AmoAPI::getItems($response);
 
         $className = get_class($this);
         if (empty($items)) {
             throw new AmoAPIException("Не найдена сущность {$className} с ID {$id}");
         }
-
-        $item = array_shift($items);
+        if (!key_exists('enums', $items)) {
+            $item = array_shift($items);
+        } else
+            $item = $items;
         if ($item['id'] != $id) {
             throw new AmoAPIException("Нет сущности {$className} с ID {$id}");
         }
