@@ -180,9 +180,12 @@ abstract class AmoObject
         }
 
         // Если обновление сущности, то добавляем обязательный параметр 'updated_at'
-        if (isset($this->id)) {
-            $params['updated_at'] = time() + AmoAPI::$updatedAtDelta;
+        if (!isset($this->enums)) {
+            if (isset($this->id)) {
+                $params['updated_at'] = time() + AmoAPI::$updatedAtDelta;
+            }
         }
+
 
         return $params;
     }
@@ -204,10 +207,10 @@ abstract class AmoObject
         if (empty($items)) {
             throw new AmoAPIException("Не найдена сущность {$className} с ID {$id}");
         }
-        if (!key_exists('enums', $items)) {
+        if (!key_exists('enums', $items) && !key_exists('responsible_user_id', $response)) {
             $item = array_shift($items);
         } else
-            $item = $items;
+            $item = $response;
         if ($item['id'] != $id) {
             throw new AmoAPIException("Нет сущности {$className} с ID {$id}");
         }
@@ -332,34 +335,19 @@ abstract class AmoObject
 
         return $this;
     }
-    public function setEnums(array $params)
+
+    public function setEnum(int $field_id, string $value)
     {
-        foreach ($params as $key => $value) {
-            $field_id = array_keys($value)[0];
-            if (is_array($value)) {
-                $field = [
-                    'field_id' => $field_id,
-                    'values' => [
-                        ['value' => $value[$field_id]]
-                    ]
-                ];
-            } else {
-                $field = [
-                    'field_id' => $field_id,
-                    'values' => [
-                        ['value' => $value[$field_id]]
-                    ]
-                ];
-            }
-
-            $i = array_search($key, array_column($this->custom_fields_values, 'id'));
-            if ($i !== false) {
-                $this->custom_fields_values[$i]['values'] = $field['values'];
-            } else {
-                $this->custom_fields_values[] = $field;
-            }
-        }
-
+        $enums = $this->enums;
+        $name = $this->name;
+        unset($this->account_id);
+        unset($this->entity_type);
+        unset($this->responsible_user_id);
+        unset($this->created_by);
+        unset($this->updated_by);
+        unset($this->created_at);
+        unset($this->updated_at);
+        $this->enums = array_merge($enums, [['value' => $value, 'sort' => count($enums)]]);
         return $this;
     }
 
@@ -435,7 +423,10 @@ abstract class AmoObject
         }
 
         if (!$returnResponse) {
-            return $items[0]['id'];
+            if (isset($items['_embedded']['custom_fields'])) {
+                return $items['_embedded']['custom_fields'][0]['id'];
+            } else
+                return $items[0]['id'];
         }
 
         return $response;

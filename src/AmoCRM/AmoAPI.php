@@ -62,19 +62,21 @@ class AmoAPI
     {
         // aaz_alan ДОПИСАТЬ ВСЕ СУЩНОСТИ
 
-        if (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
-        elseif (isset($response['_embedded']['pipelines'])) return $response['_embedded']['pipelines'];
-        elseif (isset($response['_embedded']['contacts'])) return $response['_embedded']['contacts'];
-        elseif (isset($response['_embedded']['companies'])) return $response['_embedded']['companies'];
-        elseif (isset($response['_embedded']['users'])) return $response['_embedded']['users'];
-        elseif (isset($response['_embedded']['tasks'])) return $response['_embedded']['tasks'];
-        elseif (isset($response['_embedded']['roles'])) return $response['_embedded']['roles'];
-        elseif (isset($response['_embedded']['events'])) return $response['_embedded']['events'];
-        elseif (isset($response['_embedded']['catalogs'])) return $response['_embedded']['catalogs'];
-        elseif (isset($response['_embedded']['statuses'])) return $response['_embedded']['statuses'];
-        elseif (isset($response['_embedded']['widgets'])) return $response['_embedded']['widgets'];
-        elseif (isset($response['_embedded']['notes'])) return $response['_embedded']['notes'];
-        elseif (isset($response)) return $response;
+//        if (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
+//        elseif (isset($response['_embedded']['pipelines'])) return $response['_embedded']['pipelines'];
+//        elseif (isset($response['_embedded']['contacts'])) return $response['_embedded']['contacts'];
+//        elseif (isset($response['_embedded']['companies'])) return $response['_embedded']['companies'];
+//        elseif (isset($response['_embedded']['users'])) return $response['_embedded']['users'];
+//        elseif (isset($response['_embedded']['tasks'])) return $response['_embedded']['tasks'];
+//        elseif (isset($response['_embedded']['roles'])) return $response['_embedded']['roles'];
+//        elseif (isset($response['_embedded']['events'])) return $response['_embedded']['events'];
+//        elseif (isset($response['_embedded']['catalogs'])) return $response['_embedded']['catalogs'];
+//        elseif (isset($response['_embedded']['statuses'])) return $response['_embedded']['statuses'];
+//        elseif (isset($response['_embedded']['widgets'])) return $response['_embedded']['widgets'];
+//        elseif (isset($response['_embedded']['notes'])) return $response['_embedded']['notes'];
+//        elseif (isset($response['_embedded']['custom_fields'])) return $response['_embedded']['custom_fields'];
+//        else
+            if (isset($response)) return $response;
 
 
         else return null;
