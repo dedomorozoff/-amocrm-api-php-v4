@@ -425,7 +425,9 @@ abstract class AmoObject
         if (!$returnResponse) {
             if (isset($items['_embedded']['custom_fields'])) {
                 return $items['_embedded']['custom_fields'][0]['id'];
-            } else
+            } elseif(isset($items['_embedded']['leads'])) {
+                return $items['_embedded']['leads'][0]['id'];
+            }
                 return $items[0]['id'];
         }
 
