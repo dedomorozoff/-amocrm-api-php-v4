@@ -61,7 +61,8 @@ class AmoAPI
     public static function getItems($response)
     {
         // aaz_alan ДОПИСАТЬ ВСЕ СУЩНОСТИ
-        if (str_contains($response['_links']['self']['href'], 'contacts')) return $response;
+        if (!isset($response['_links'])) return $response;
+        elseif (str_contains($response['_links']['self']['href'], 'contacts')) return $response;
         elseif (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
         elseif (str_contains($response['_links']['self']['href'], 'leads')) return $response;
         elseif (isset($response['_embedded']['pipelines'])) return $response['_embedded']['pipelines'];
