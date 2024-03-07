@@ -23,7 +23,7 @@
  *
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace AmoCRM;
 
@@ -61,8 +61,9 @@ class AmoAPI
     public static function getItems($response)
     {
         // aaz_alan ДОПИСАТЬ ВСЕ СУЩНОСТИ
-
-        if (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
+        if (str_contains($response['_links']['self']['href'], 'contacts')) return $response;
+        elseif (isset($response['_embedded']['leads'])) return $response['_embedded']['leads'];
+        elseif (str_contains($response['_links']['self']['href'], 'leads')) return $response;
         elseif (isset($response['_embedded']['pipelines'])) return $response['_embedded']['pipelines'];
         elseif (isset($response['_embedded']['contacts'])) return $response['_embedded']['contacts'];
         elseif (isset($response['_embedded']['companies'])) return $response['_embedded']['companies'];
@@ -74,10 +75,12 @@ class AmoAPI
         elseif (isset($response['_embedded']['statuses'])) return $response['_embedded']['statuses'];
         elseif (isset($response['_embedded']['widgets'])) return $response['_embedded']['widgets'];
         elseif (isset($response['_embedded']['notes'])) return $response['_embedded']['notes'];
-        elseif (isset($response)) return $response;
+        elseif (isset($response['_embedded']['custom_fields'])) return $response['_embedded']['custom_fields'];
+        else
+            if (isset($response)) return $response;
 
 
-        else return null;
+            else return null;
 
     }
 
@@ -95,8 +98,9 @@ class AmoAPI
         bool $returnResponses = false,
         $subdomain = null,
         $limit = 250
-    ):array {
-        if (! is_array($amoObjects)) {
+    ): array
+    {
+        if (!is_array($amoObjects)) {
             $amoObjects = [$amoObjects];
         }
 
@@ -121,10 +125,10 @@ class AmoAPI
      * @return array
      * @throws AmoAPIException
      */
-    public static function saveObjects($amoObjects, bool $returnResponses = false, $subdomain = null) :array
+    public static function saveObjects($amoObjects, bool $returnResponses = false, $subdomain = null): array
     {
-        if (! is_array($amoObjects)) {
-            $amoObjects = [ $amoObjects ];
+        if (!is_array($amoObjects)) {
+            $amoObjects = [$amoObjects];
         }
 
         $parameters = [];
@@ -147,7 +151,7 @@ class AmoAPI
             $responses[] = $response;
         }
 
-        if (! $returnResponses) {
+        if (!$returnResponses) {
             $items = [];
             foreach ($responses as $response) {
                 $items = array_merge($items, self::getItems($response));
@@ -166,17 +170,17 @@ class AmoAPI
      * @return array
      * @throws AmoAPIException
      */
-    public static function deleteObjects($amoObjects, bool $returnResponses = false, $subdomain = null) :array
+    public static function deleteObjects($amoObjects, bool $returnResponses = false, $subdomain = null): array
     {
-        if (! is_array($amoObjects)) {
-            $amoObjects = [ $amoObjects ];
+        if (!is_array($amoObjects)) {
+            $amoObjects = [$amoObjects];
         }
 
         $parameters = [];
         foreach ($amoObjects as $object) {
             $params = $object->getParams();
             $id = $params['id'] ?? null;
-            if (! $id) {
+            if (!$id) {
                 throw new AmoAPIException("Для удаления сущности требуется свойство id: " . print_r($params, true));
             }
             $parameters[$object::URL]['delete'][] = $id;
@@ -193,7 +197,7 @@ class AmoAPI
             $responses[] = $response;
         }
 
-        if (! $returnResponses) {
+        if (!$returnResponses) {
             $items = [];
             foreach ($responses as $response) {
                 $items = array_merge($items, self::getItems($response));
