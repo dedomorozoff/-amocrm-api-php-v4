@@ -33,7 +33,7 @@ trait AmoAPIGetAccount
     public static function getAccount(string $with = '', $subdomain = null)
     {
         $params = empty($with) ? [] : [ 'with' => $with ];
-        return self::request('/api/v2/account', 'GET', $params, $subdomain);
+        return self::request('/api/v4/account', 'GET', $params, $subdomain);
     }
 
     /**
